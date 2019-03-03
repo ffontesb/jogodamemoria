@@ -11,6 +11,7 @@ let iElementsMatched = [];
 let moves = 0;
 let numeroDeEstrelas = $('li i.fa-star').length;
 let eventoAnterior = 0;
+let eventoAtual;
 let h=0;
 let m=0;
 let s=0;
@@ -70,44 +71,54 @@ function gerenciadorDeClicks(){
 	//pq eu nao consigo customizar o function?
 	$('li.card').click(function(clickEvent){
 
+		eventoAtual = clickEvent.target;
 		//cronometro é iniciando somente no primeiro click
 		if(primeiroClick)
 			iniciarCronometro();
 
-		abrirCarta(clickEvent);
+		if(eventoAtual !== eventoAnterior){
 
-		if(iElementsOpened.length===2){
+			abrirCarta(clickEvent);
 
-			$('li.card').off();
+			if(iElementsOpened.length===2){
 
-			contaMovesECalculaEstrelas();		
-					
-			if(deuMatch())
+				$('li.card').off();
 
-				if(ganhouOJogo()){
-					$('li.card').off();
+				contaMovesECalculaEstrelas();		
+						
+				if(deuMatch())
 
-					document.querySelector('.modal-tempo').textContent = 
-						'Seu tempo foi: ' 
-							+ h.toString().padStart(2,'0') 
-							+ ':' + m.toString().padStart(2,'0')
-							+ ':' + s.toString().padStart(2,'0');
+					if(ganhouOJogo()){
+						$('li.card').off();
 
-					document.querySelector('.modal-movimentos').textContent = 
-						'Você fez ' + moves + ' movimentos';
+						document.querySelector('.modal-tempo').textContent = 
+							'Seu tempo foi: ' 
+								+ h.toString().padStart(2,'0') 
+								+ ':' + m.toString().padStart(2,'0')
+								+ ':' + s.toString().padStart(2,'0');
 
-					$('.modal').modal('show');
+						document.querySelector('.modal-movimentos').textContent = 
+							'Você fez ' + moves + ' movimentos';
 
-					clearInterval(cronometro);
+						$('.modal').modal('show');
 
-					setTimeout(refresh,5000);
-				}
+						clearInterval(cronometro);
 
-			desvirarCartasSemMatchDepoisDe1Segundo();
+						setTimeout(refresh,4000);
+					}
+
+				desvirarCartasSemMatchDepoisDe1Segundo();
+				
+				//reativa o gerenciador de clicks depois de 1 seg
+				setTimeout(gerenciadorDeClicks,1000);
+			}
 			
-			setTimeout(gerenciadorDeClicks,1000)
+		}else{
+			console.log('Papai bobinho. Não pode abrir a mesma carta 2x');
 		}
-		primeiroClick=false;		
+
+		primeiroClick=false;
+		eventoAnterior = eventoAtual;		
 	});
 	
 }
@@ -123,7 +134,6 @@ function gerenciaEstrelas(){
 			+ '<li><i class="fa fa-star"></i></li>'
 			+ '<li><i class="fa fa-star"></i></li></ul>');
 	}
-	
 }
 
 function contaMovesECalculaEstrelas(){
@@ -141,15 +151,14 @@ function contaMovesECalculaEstrelas(){
 		
 
 function abrirCarta(eventoAtual){
-
-	if(eventoAtual.target!==eventoAnterior.target){
+	//if(eventoAtual.target!==eventoAnterior.target){
 		$(eventoAtual.target).addClass('open');
 		$(eventoAtual.target).addClass('show');
 
 		iElementsOpened.push($(eventoAtual.target).children('i'));
-	}
+	//}
 	
-	eventoAnterior = eventoAtual;
+	//eventoAnterior = eventoAtual;
 }
 
 function desvirarCartasSemMatchDepoisDe1Segundo(){
@@ -166,7 +175,9 @@ function desvirarCartasSemMatchDepoisDe1Segundo(){
 
 
 function deuMatch(){
-	if (  (iElementsOpened[0].attr('class')) === (iElementsOpened[1].attr('class'))   ){
+
+	if (  (iElementsOpened[0].attr('class')) 
+			=== (iElementsOpened[1].attr('class'))   ){
 
 		iElementsOpened[0].parent().toggleClass('match');
 		iElementsOpened[1].parent().toggleClass('match');
