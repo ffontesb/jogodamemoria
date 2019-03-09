@@ -117,6 +117,15 @@ function gerenciadorDeClicks(){
 	
 }
 
+function abrirCarta(){
+		$(eventoAtual).addClass('open');
+		$(eventoAtual).addClass('show');
+
+		if (eventoAtual!== eventoAnterior )
+			cartasViradas.push($(eventoAtual).children('i'));
+}
+
+
 
 function exibirModal(){
 	document.querySelector('.modal-tempo').textContent = 
@@ -156,21 +165,6 @@ function contaMovesECalculaEstrelas(){
 	}
 }
 
-		
-
-function abrirCarta(){
-	//if(eventoAtual.target!==eventoAnterior.target){
-		$(eventoAtual).addClass('open');
-		$(eventoAtual).addClass('show');
-
-		//colocar o if aqui!!!
-		cartasViradas.push($(eventoAtual).children('i'));
-		console.log(cartasViradas.length);
-
-	//}
-	
-	//eventoAnterior = eventoAtual;
-}
 
 function desvirarCartasSemMatchDepoisDe1Segundo(){
 	setTimeout(function(){
