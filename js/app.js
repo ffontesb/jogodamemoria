@@ -91,16 +91,7 @@ function gerenciadorDeClicks(){
 					if(ganhouOJogo()){
 						$('li.card').off();
 
-						document.querySelector('.modal-tempo').textContent = 
-							'Seu tempo foi: ' 
-								+ h.toString().padStart(2,'0') 
-								+ ':' + m.toString().padStart(2,'0')
-								+ ':' + s.toString().padStart(2,'0');
-
-						document.querySelector('.modal-movimentos').textContent = 
-							'Você fez ' + moves + ' movimentos';
-
-						$('.modal').modal('show');
+						exibirModal();
 
 						clearInterval(cronometro);
 
@@ -123,6 +114,19 @@ function gerenciadorDeClicks(){
 	
 }
 
+
+function exibirModal(){
+	document.querySelector('.modal-tempo').textContent = 
+							'Seu tempo foi: ' 
+								+ h.toString().padStart(2,'0') 
+								+ ':' + m.toString().padStart(2,'0')
+								+ ':' + s.toString().padStart(2,'0');
+
+	document.querySelector('.modal-movimentos').textContent = 
+							'Você fez ' + moves + ' movimentos';
+
+	$('.modal').modal('show');
+}
 
 
 function gerenciaEstrelas(){
