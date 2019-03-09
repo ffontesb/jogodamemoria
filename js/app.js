@@ -81,7 +81,7 @@ function gerenciadorDeClicks(){
 			iniciarCronometro();
 
 		if (eventosIguais.length < 2){
-			abrirCarta(clickEvent);
+			abrirCarta();
 
 			if(cartasViradas.length===2){
 
@@ -158,12 +158,15 @@ function contaMovesECalculaEstrelas(){
 
 		
 
-function abrirCarta(eventoAtual){
+function abrirCarta(){
 	//if(eventoAtual.target!==eventoAnterior.target){
-		$(eventoAtual.target).addClass('open');
-		$(eventoAtual.target).addClass('show');
+		$(eventoAtual).addClass('open');
+		$(eventoAtual).addClass('show');
 
-		cartasViradas.push($(eventoAtual.target).children('i'));
+		//colocar o if aqui!!!
+		cartasViradas.push($(eventoAtual).children('i'));
+		console.log(cartasViradas.length);
+
 	//}
 	
 	//eventoAnterior = eventoAtual;
