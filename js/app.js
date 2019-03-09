@@ -11,7 +11,7 @@ let iElementsMatched = [];
 let eventosIguais = [];
 let moves = 0;
 let numeroDeEstrelas = $('li i.fa-star').length;
-let eventoAnterior = 0;
+let eventoAnterior = null;
 let eventoAtual;
 let h=0;
 let m=0;
@@ -21,7 +21,6 @@ let hElement = document.querySelector('#hora');
 let mElement = document.querySelector('#minuto');
 let sElement = document.querySelector('#segundo');
 let cronometro;
-let x =1;
 
 //iniciaOJogo(shuffle(arrayDeck));
 iniciaOJogo(arrayDeck);
@@ -87,7 +86,7 @@ function gerenciadorDeClicks(){
 
 				$('li.card').off();
 
-				contaMovesECalculaEstrelas();		
+				contaMovimentosEEstrelas();		
 						
 				if(deuMatch())
 
@@ -102,28 +101,49 @@ function gerenciadorDeClicks(){
 					}
 
 				desvirarCartasSemMatchDepoisDe1Segundo();
-				
+				eventoAtual = null;
+				eventoAnterior = null;
 				//reativa o gerenciador de clicks depois de 1 seg
 				setTimeout(gerenciadorDeClicks,1000);
 			}
 			
-		}else{
-			console.log('Papai bobinho. Não pode abrir a mesma carta 2x');
 		}
+
 		eventosIguais = [];
 		primeiroClick=false;
-		eventoAnterior = eventoAtual;		
+		eventoAnterior = eventoAtual;	
 	});
 	
 }
 
 function abrirCarta(){
-		$(eventoAtual).addClass('open');
-		$(eventoAtual).addClass('show');
 
-		if (eventoAtual!== eventoAnterior )
-			cartasViradas.push($(eventoAtual).children('i'));
+	$(eventoAtual).addClass('open');
+	$(eventoAtual).addClass('show');
+
+	if (eventoAtual!== eventoAnterior )
+		cartasViradas.push($(eventoAtual).children('i'));
 }
+
+function deuMatch(){
+
+	if (  (cartasViradas[0].attr('class')) 
+			=== (cartasViradas[1].attr('class')) 
+			&&  eventoAtual !== eventoAnterior ){
+
+		cartasViradas[0].parent().toggleClass('match');
+		cartasViradas[1].parent().toggleClass('match');
+
+		iElementsMatched.push(cartasViradas[0]);
+		iElementsMatched.push(cartasViradas[1]);
+
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 
 
 
@@ -153,7 +173,7 @@ function gerenciaEstrelas(){
 	}
 }
 
-function contaMovesECalculaEstrelas(){
+function contaMovimentosEEstrelas(){
 	$('.moves').text(++moves);
 	switch(moves){
 		case 7: 
@@ -175,27 +195,8 @@ function desvirarCartasSemMatchDepoisDe1Segundo(){
 		cartasViradas[1].parent().toggleClass('show');
 
 		cartasViradas = [];
-	},1000);
-}
+	},500);
 
-
-function deuMatch(){
-
-	if (  (cartasViradas[0].attr('class')) 
-			=== (cartasViradas[1].attr('class')) 
-			&&  eventoAtual !== eventoAnterior ){
-
-		cartasViradas[0].parent().toggleClass('match');
-		cartasViradas[1].parent().toggleClass('match');
-
-		iElementsMatched.push(cartasViradas[0]);
-		iElementsMatched.push(cartasViradas[1]);
-
-		return true;
-	}
-	else{
-		return false;
-	}
 }
 
 
