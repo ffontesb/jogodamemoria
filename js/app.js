@@ -6,7 +6,7 @@
  
 let arrayDeck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-bomb", "fa-leaf", "fa-bomb", "fa-bolt", "fa-bicycle", "fa-paper-plane-o", "fa-cube"];
 let ulElement = document.querySelector('ul.deck');
-let iElementsOpened = [];
+let cartasViradas = [];
 let iElementsMatched = [];
 let eventosIguais = [];
 let moves = 0;
@@ -43,7 +43,7 @@ function iniciaOJogo(arrayDeck){
 		ulElement.append(liElement);
 	});
 }
-
+	
 function cronometrar(){
 		s++;
 
@@ -83,7 +83,7 @@ function gerenciadorDeClicks(){
 		if (eventosIguais.length < 2){
 			abrirCarta(clickEvent);
 
-			if(iElementsOpened.length===2){
+			if(cartasViradas.length===2){
 
 				$('li.card').off();
 
@@ -163,7 +163,7 @@ function abrirCarta(eventoAtual){
 		$(eventoAtual.target).addClass('open');
 		$(eventoAtual.target).addClass('show');
 
-		iElementsOpened.push($(eventoAtual.target).children('i'));
+		cartasViradas.push($(eventoAtual.target).children('i'));
 	//}
 	
 	//eventoAnterior = eventoAtual;
@@ -171,28 +171,28 @@ function abrirCarta(eventoAtual){
 
 function desvirarCartasSemMatchDepoisDe1Segundo(){
 	setTimeout(function(){
-		iElementsOpened[0].parent().toggleClass('open');
-		iElementsOpened[0].parent().toggleClass('show');
+		cartasViradas[0].parent().toggleClass('open');
+		cartasViradas[0].parent().toggleClass('show');
 
-		iElementsOpened[1].parent().toggleClass('open');
-		iElementsOpened[1].parent().toggleClass('show');
+		cartasViradas[1].parent().toggleClass('open');
+		cartasViradas[1].parent().toggleClass('show');
 
-		iElementsOpened = [];
+		cartasViradas = [];
 	},1000);
 }
 
 
 function deuMatch(){
 
-	if (  (iElementsOpened[0].attr('class')) 
-			=== (iElementsOpened[1].attr('class')) 
+	if (  (cartasViradas[0].attr('class')) 
+			=== (cartasViradas[1].attr('class')) 
 			&&  eventoAtual !== eventoAnterior ){
 
-		iElementsOpened[0].parent().toggleClass('match');
-		iElementsOpened[1].parent().toggleClass('match');
+		cartasViradas[0].parent().toggleClass('match');
+		cartasViradas[1].parent().toggleClass('match');
 
-		iElementsMatched.push(iElementsOpened[0]);
-		iElementsMatched.push(iElementsOpened[1]);
+		iElementsMatched.push(cartasViradas[0]);
+		iElementsMatched.push(cartasViradas[1]);
 
 		return true;
 	}
