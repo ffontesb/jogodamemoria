@@ -21,6 +21,7 @@ let hElement = document.querySelector('#hora');
 let mElement = document.querySelector('#minuto');
 let sElement = document.querySelector('#segundo');
 let cronometro;
+let x =1;
 
 //iniciaOJogo(shuffle(arrayDeck));
 iniciaOJogo(arrayDeck);
@@ -184,7 +185,8 @@ function desvirarCartasSemMatchDepoisDe1Segundo(){
 function deuMatch(){
 
 	if (  (iElementsOpened[0].attr('class')) 
-			=== (iElementsOpened[1].attr('class'))   ){
+			=== (iElementsOpened[1].attr('class')) 
+			&&  eventoAtual !== eventoAnterior ){
 
 		iElementsOpened[0].parent().toggleClass('match');
 		iElementsOpened[1].parent().toggleClass('match');
