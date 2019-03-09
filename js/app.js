@@ -124,6 +124,7 @@ function gerenciadorDeClicks(){
 }
 
 
+
 function gerenciaEstrelas(){
 	let numeroDeEstrelas = $('li i.fa-star').length;
 	
@@ -196,7 +197,7 @@ function deuMatch(){
 //Porque esse if ternario nao deu certo?
 //iElementsMatched.length===6 ? (return true) : (return false);	
 function ganhouOJogo(){
-	if(iElementsMatched.length === 6){
+	if(iElementsMatched.length === 16){
 		iElementsMatched = [];
 		return true; 
 	}		
