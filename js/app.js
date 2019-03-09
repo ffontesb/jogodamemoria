@@ -2,12 +2,13 @@
  * Create a list that holds all of your cards
  */
 
- //meu dev
+ //meudev2
  
 let arrayDeck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-bomb", "fa-leaf", "fa-bomb", "fa-bolt", "fa-bicycle", "fa-paper-plane-o", "fa-cube"];
 let ulElement = document.querySelector('ul.deck');
 let iElementsOpened = [];
 let iElementsMatched = [];
+let eventosIguais = [];
 let moves = 0;
 let numeroDeEstrelas = $('li i.fa-star').length;
 let eventoAnterior = 0;
@@ -20,7 +21,6 @@ let hElement = document.querySelector('#hora');
 let mElement = document.querySelector('#minuto');
 let sElement = document.querySelector('#segundo');
 let cronometro;
-
 
 //iniciaOJogo(shuffle(arrayDeck));
 iniciaOJogo(arrayDeck);
@@ -72,12 +72,14 @@ function gerenciadorDeClicks(){
 	$('li.card').click(function(clickEvent){
 
 		eventoAtual = clickEvent.target;
-		//cronometro é iniciando somente no primeiro click
+		
+		if(eventoAtual === eventoAnterior)
+			eventosIguais.push(eventoAtual);
+
 		if(primeiroClick)
 			iniciarCronometro();
 
-		if(eventoAtual !== eventoAnterior){
-
+		if (eventosIguais.length < 2){
 			abrirCarta(clickEvent);
 
 			if(iElementsOpened.length===2){
@@ -107,7 +109,7 @@ function gerenciadorDeClicks(){
 		}else{
 			console.log('Papai bobinho. Não pode abrir a mesma carta 2x');
 		}
-
+		eventosIguais = [];
 		primeiroClick=false;
 		eventoAnterior = eventoAtual;		
 	});
@@ -122,9 +124,9 @@ function exibirModal(){
 								+ ':' + m.toString().padStart(2,'0')
 								+ ':' + s.toString().padStart(2,'0');
 
-	document.querySelector('.modal-movimentos').textContent = 
-							'Você fez ' + moves + ' movimentos';
-
+	document.querySelector('.modal-movimentos').textContent = 'Você fez '
+							+ moves + ' movimentos '
+							+ eventosIguais.length + ' eventos iguais';
 	$('.modal').modal('show');
 }
 
