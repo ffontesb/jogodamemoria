@@ -97,23 +97,21 @@ function gerenciadorDeClicks(){
 
 						clearInterval(cronometro);
 
-						setTimeout(refresh,4000);
+						setTimeout(refresh,3000);
 					}
 
-				desvirarCartasSemMatchDepoisDe1Segundo();
-				eventoAtual = null;
-				eventoAnterior = null;
+				//desvirarCartasSemMatchDepoisDe1Segundo();
+				setTimeout(desvirarAsCartas,500);
+
 				//reativa o gerenciador de clicks depois de 1 seg
 				setTimeout(gerenciadorDeClicks,1000);
 			}
 			
 		}
-
 		eventosIguais = [];
 		primeiroClick=false;
 		eventoAnterior = eventoAtual;	
 	});
-	
 }
 
 function abrirCarta(){
@@ -186,19 +184,17 @@ function contaMovimentosEEstrelas(){
 }
 
 
-function desvirarCartasSemMatchDepoisDe1Segundo(){
-	setTimeout(function(){
-		cartasViradas[0].parent().toggleClass('open');
-		cartasViradas[0].parent().toggleClass('show');
+function desvirarAsCartas(){
+	cartasViradas[0].parent().toggleClass('open');
+	cartasViradas[0].parent().toggleClass('show');
 
-		cartasViradas[1].parent().toggleClass('open');
-		cartasViradas[1].parent().toggleClass('show');
+	cartasViradas[1].parent().toggleClass('open');
+	cartasViradas[1].parent().toggleClass('show');
 
-		cartasViradas = [];
-	},500);
-
+	cartasViradas = [];
+	eventoAtual = null;
+	eventoAnterior = null;
 }
-
 
 //Porque esse if ternario nao deu certo?
 //iElementsMatched.length===6 ? (return true) : (return false);	
