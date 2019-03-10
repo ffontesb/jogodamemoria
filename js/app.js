@@ -1,13 +1,8 @@
- /*
- * Create a list that holds all of your cards
- */
 
- //meudev2
- 
 let arrayDeck = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-bomb", "fa-leaf", "fa-bomb", "fa-bolt", "fa-bicycle", "fa-paper-plane-o", "fa-cube"];
 let ulElement = document.querySelector('ul.deck');
 let cartasViradas = [];
-let iElementsMatched = [];
+let cartasMatched = [];
 let eventosIguais = [];
 let moves = 0;
 let numeroDeEstrelas = $('li i.fa-star').length;
@@ -23,8 +18,6 @@ let sElement = document.querySelector('#segundo');
 let cronometro;
 
 iniciaOJogo(shuffle(arrayDeck));
-//iniciaOJogo(arrayDeck);
-//gerenciadorDeClicks();
 
 function iniciaOJogo(arrayDeck){
 
@@ -129,10 +122,8 @@ function deuMatch(){
 		cartasViradas[0].parent().toggleClass('match');
 		cartasViradas[1].parent().toggleClass('match');
 
-		iElementsMatched.push(cartasViradas[0]);
-		iElementsMatched.push(cartasViradas[1]);
-
-		console.log(iElementsMatched.length);
+		cartasMatched.push(cartasViradas[0]);
+		cartasMatched.push(cartasViradas[1]);
 
 		return true;
 	}
@@ -150,8 +141,7 @@ function exibirModal(){
 								+ ':' + s.toString().padStart(2,'0');
 
 	document.querySelector('.modal-movimentos').textContent = 'Você fez '
-							+ moves + ' movimentos '
-							+ iElementsMatched.length + ' matched';
+							+ moves + ' movimentos ';
 							
 	$('.modal').modal('show');
 }
@@ -195,10 +185,10 @@ function desvirarAsCartas(){
 }
 
 //Porque esse if ternario nao deu certo?
-//iElementsMatched.length===6 ? (return true) : (return false);	
+//cartasMatched.length===6 ? (return true) : (return false);	
 function ganhouOJogo(){
-	if(iElementsMatched.length === 16){
-		iElementsMatched = [];
+	if(cartasMatched.length === 16){
+		cartasMatched = [];
 		return true; 
 	}		
 	else
@@ -256,7 +246,7 @@ function refresh(){
 	s=0;
 	m=0;
 	h=0;
-	iElementsMatched =[];
+	cartasMatched =[];
 	
 	sElement.textContent = s.toString().padStart(2,'0');
 	mElement.textContent = m.toString().padStart(2,'0');
@@ -270,26 +260,4 @@ function refresh(){
 
 
 
-//isso nao funcionou. Pq?
-function iniciar(){
-	shuffle(arrayDeck);
-
-	let ulElement = $('ul.deck');
-	
-	$.each(arrayDeck,function(index, value){
-		console.log(index +" >> "+ value);
-				
-		ulElement.append('<li class="card"></li>');
-		let liElement = ulElement.children('li').first(); 
-		liElement.append('<i></i>');
-		let iElement = liElement.children('i').first();
-				iElement.addClass('fa');
-		iElement.addClass(value);
-		
-		//console.log(ulElement);
-		//console.log(liElement);
-		//console.log(iElement);
-		//console.log('-----------------------------------');
-	});
-}//fim iniciar 
 
