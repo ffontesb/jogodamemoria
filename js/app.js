@@ -22,9 +22,9 @@ let mElement = document.querySelector('#minuto');
 let sElement = document.querySelector('#segundo');
 let cronometro;
 
-//iniciaOJogo(shuffle(arrayDeck));
-iniciaOJogo(arrayDeck);
-gerenciadorDeClicks();
+iniciaOJogo(shuffle(arrayDeck));
+//iniciaOJogo(arrayDeck);
+//gerenciadorDeClicks();
 
 function iniciaOJogo(arrayDeck){
 
@@ -67,52 +67,49 @@ function iniciarCronometro(){
 }
 
 
-function gerenciadorDeClicks(){
-	//pq eu nao consigo customizar o function?
-	$('li.card').click(function(clickEvent){
-
-		eventoAtual = clickEvent.target;
+function gerenciadorDeClicks(clickEvent){
+	
+	eventoAtual = clickEvent.target;
 		
-		if(eventoAtual === eventoAnterior)
+	if(eventoAtual === eventoAnterior)
 			eventosIguais.push(eventoAtual);
 
-		if(primeiroClick)
-			iniciarCronometro();
+	if(primeiroClick)
+		iniciarCronometro();
 
-		if (eventosIguais.length < 2){
-			abrirCarta();
+	if (eventosIguais.length < 2){
+		abrirCarta();
 
-			if(cartasViradas.length===2){
+		if(cartasViradas.length===2){
+			$('li.card').off();
 
-				$('li.card').off();
-
-				contaMovimentosEEstrelas();		
+			contaMovimentosEEstrelas();		
 						
-				if(deuMatch())
+			if(deuMatch())
 
-					if(ganhouOJogo()){
-						$('li.card').off();
+				if(ganhouOJogo()){
+					$('li.card').off();
 
-						exibirModal();
+					exibirModal();
 
-						clearInterval(cronometro);
+					clearInterval(cronometro);
 
-						setTimeout(refresh,3000);
-					}
-
-				//desvirarCartasSemMatchDepoisDe1Segundo();
-				setTimeout(desvirarAsCartas,500);
-
-				//reativa o gerenciador de clicks depois de 1 seg
-				setTimeout(gerenciadorDeClicks,1000);
-			}
-			
+					setTimeout(refresh,3000);
+				}
+			setTimeout(desvirarAsCartas,500);
+			setTimeout(reiniciarGerenciadorDeClicks,600);
 		}
-		eventosIguais = [];
-		primeiroClick=false;
-		eventoAnterior = eventoAtual;	
-	});
+			
+	}
+	eventosIguais = [];
+	primeiroClick=false;
+	eventoAnterior = eventoAtual;
 }
+
+function reiniciarGerenciadorDeClicks(){
+	$('li.card').click(gerenciadorDeClicks);
+}
+
 
 function abrirCarta(){
 
@@ -135,14 +132,14 @@ function deuMatch(){
 		iElementsMatched.push(cartasViradas[0]);
 		iElementsMatched.push(cartasViradas[1]);
 
+		console.log(iElementsMatched.length);
+
 		return true;
 	}
 	else{
 		return false;
 	}
 }
-
-
 
 
 function exibirModal(){
@@ -154,7 +151,8 @@ function exibirModal(){
 
 	document.querySelector('.modal-movimentos').textContent = 'Você fez '
 							+ moves + ' movimentos '
-							+ eventosIguais.length + ' eventos iguais';
+							+ iElementsMatched.length + ' matched';
+							
 	$('.modal').modal('show');
 }
 
@@ -174,10 +172,10 @@ function gerenciaEstrelas(){
 function contaMovimentosEEstrelas(){
 	$('.moves').text(++moves);
 	switch(moves){
-		case 7: 
+		case 14: 
 			$('ul.stars').children('li').first().remove();
 			break;
-		case 12:
+		case 20:
 			$('ul.stars').children('li').first().remove();
 			break;
 	}
@@ -226,12 +224,8 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
-
-
-
 
 
 /*
@@ -245,19 +239,14 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-// $('div.restart').click(function(){
-// 	moves=0;
-// 	$('.moves').text(0);
-// 	$('li.card').remove();
-// 	iniciaOJogo(shuffle(arrayDeck));
-// 	gerenciadorDeClicks();
-// });
-
 
 $('div.restart').click(function(){
 	clearInterval(cronometro);
 	refresh();
 });
+
+
+$('li.card').click(gerenciadorDeClicks);
 
 
 function refresh(){
@@ -267,6 +256,7 @@ function refresh(){
 	s=0;
 	m=0;
 	h=0;
+	iElementsMatched =[];
 	
 	sElement.textContent = s.toString().padStart(2,'0');
 	mElement.textContent = m.toString().padStart(2,'0');
@@ -275,7 +265,7 @@ function refresh(){
 	$('.moves').text(0);
 	primeiroClick = true;
 	iniciaOJogo(shuffle(arrayDeck));
-	gerenciadorDeClicks();
+	$('li.card').click(gerenciadorDeClicks);
 }
 
 
