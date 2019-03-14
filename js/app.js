@@ -133,24 +133,30 @@ function deuMatch(){
 }
 
 
+function totalDeEstrelas(){
+	return $('li i.fa-star').length;
+}
+
 function exibirModal(){
+	
 	document.querySelector('.modal-tempo').textContent = 
 							'Seu tempo foi: ' 
 								+ h.toString().padStart(2,'0') 
 								+ ':' + m.toString().padStart(2,'0')
 								+ ':' + s.toString().padStart(2,'0');
 
-	document.querySelector('.modal-movimentos').textContent = 'Você fez '
-							+ moves + ' movimentos ';
+	document.querySelector('.modal-movimentos').textContent = 'Você ganhou com '
+							+ moves + ' movimentos e '
+							+ totalDeEstrelas() + ' estrelas!';
 							
 	$('.modal').modal('show');
 }
 
 
 function gerenciaEstrelas(){
-	let numeroDeEstrelas = $('li i.fa-star').length;
+	//let numeroDeEstrelas = $('li i.fa-star').length;
 	
-	if(numeroDeEstrelas<3){
+	if(totalDeEstrelas()<3){
 		$('ul.stars').remove();
 		$('section.score-panel').append('<ul class="stars">'
 			+ '<li><i class="fa fa-star"></i></li>'
