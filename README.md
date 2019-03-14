@@ -1,20 +1,35 @@
-# Memory Game Project
+# Projeto Jogo da Memória
 
-## Table of Contents
+## Tabela de conteúdo
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Instruções](#instrucoes)
+* [Recursos Externos](#recursos)
+* [Contribuindo](#contribuindo)
 
-## Instructions
+## Instruções
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+O objetivo do jogo é encontrar pares de cartas iguais no menor tempo possível e da forma mais eficiente.
 
-To get started, open `js/app.js` and start building out the app's functionality
+O jogador faz um MATCH quando consegue encontrar um par igual de cartas. 
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+O jogo utiliza uma classificação baseada em estrelas (que vai de 1 a 3) que reflete o desempenho do jogador: 
 
-## Contributing
+No começo do jogo  são exibidas 3 estrelas. De acordo com o número de movimentos feitos pelo jogador, o numero de estrelas vai sendo reduzido até chegar a 1. Segue a regra de pontuação:
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+3 estrelas - 0 ovimentos
+2 estrelas - 14 movimentos
+1 estrela - 20 movimentos
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+O jogo também dispõe de um cronometro que informa o tempo de jogo.
+
+Quando o MATCH tiver sido realizado para todos os pares, significa que o jogo acabou. Uma tela será exibida ao jogador, contendo as informações de sua performance: número de movimentos, total de estrelas e tempo total.
+
+# Recursos externos utilizados:
+* https://fonts.googleapis.com
+* Bootstrap
+* JQuery
+* https://maxcdn.bootstrapcdn.com
+
+## Contribuindo
+
+Para contribuir acesse [https://github.com/ffontesb/jogodamemoria](https://github.com/ffontesb/jogodamemoria)

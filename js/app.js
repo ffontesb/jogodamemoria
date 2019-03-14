@@ -154,7 +154,6 @@ function exibirModal(){
 
 
 function gerenciaEstrelas(){
-	//let numeroDeEstrelas = $('li i.fa-star').length;
 	
 	if(totalDeEstrelas()<3){
 		$('ul.stars').remove();
